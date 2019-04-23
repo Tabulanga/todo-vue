@@ -7,7 +7,7 @@
 import NewTodo from '@/components/NewTodo'
 
 export default {
-  name: 'home',
+  name: 'AddTodo',
   components: {
     NewTodo
   }

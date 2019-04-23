@@ -1,32 +1,60 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/add">New Todo</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+  v-app#app
+    v-container
+      v-toolbar(app color="green" dark)
+        v-spacer
+
+        v-container.page
+          v-layout(align-center justify-center row fill-height)
+            v-toolbar-title.headline.text-uppercase
+              router-link(
+                to="/"
+                tag="span"
+                style="cursor: pointer"
+              )
+                span.font-weight-regular TODO
+                span.font-weight-light VUE
+
+            v-spacer
+
+            v-btn(
+              flat
+              small
+              to="/about"
+            )
+              v-icon info
+              span.hidden-xs-only
+                | About
+
+            v-btn(
+              flat
+              small
+              to="/add"
+            )
+              v-icon add_circle_outline
+              | New Todo
+
+        v-spacer
+
+      v-content
+        router-view
+        alert
 </template>
 
+<script>
+import Alert from '@/components/Alert'
+
+export default {
+  name: 'App',
+  components: {
+    Alert
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.container.page {
+  max-width: 800px;
+  padding: 0px;
 }
 </style>

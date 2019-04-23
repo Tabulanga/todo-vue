@@ -1,54 +1,95 @@
 <template lang="pug">
-  .new
-    h1
-      | Новая задача
-    | Заголовок:
-    br
-    input(v-model='todoItem.title')
-    br
-    | Теги (разделенные запятой):
-    br
-    input(v-model='tagStr')
-    br
-    | Описание задачи:
-    br
-    textarea(v-model='todoItem.description' placeholder="введите подробности")
-    br
-    | Дата выполнения:
-    br
-    input(v-model='selectedDate' type='date')
+  v-container.page
+    v-layout(column)
+      v-flex
+        div.headline.font-weight-black
+          | New todo
+
+        input-title(v-model="todoItem.title")
+
+        v-text-field(
+          v-model.trim="tagStr"
+          label="Tags"
+          hint="Enter tags, separated by commas"
+          background-color="grey lighten-3"
+        )
+
+        input-description(v-model="todoItem.description")
+
+        input-deadline(v-model="todoItem.deadline")
+
+        v-flex.text-xs-right
+          v-btn(
+            flat
+            outline
+            color="grey"
+            to="/"
+          )
+            | Cancel
+
+          v-btn(
+            color="green"
+            @click="validate"
+            dark
+          )
+            | Add Todo
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import moment from 'moment'
+import InputTitle from './fields/InputTitle'
+import InputDescription from './fields/InputDescription'
+import InputDeadline from './fields/InputDeadline'
 
 export default {
   name: 'newTodo',
+  components: {
+    InputTitle,
+    InputDescription,
+    InputDeadline
+  },
   data () {
     return {
       tagStr: '',
-      selectedDate: '2019-04-18', 
       todoItem: {
+        id: Date.now().toString(),
         title: '',
-        deadline: selectedDate,
+        deadline: moment().add(1, 'day').format('YYYY-MM-DD'),
         description: '',
-        tags: [],
+        tags: new Set(),
 
-        status: '',
-        expired: false,
-        edited: true
+        status: 'in__work',
+        expired: false
       }
     }
   },
-  computed: { ...mapState([ 'todoList' ]) },
   methods: {
-    setDeadline (date) {
-      this.todoItem.deadline = new Date(date);
+    parseTags (str) {
+      const set = new Set()
+      str.split(',')
+        .forEach(tag => {
+          const trimed = tag.trim()
+          if (trimed.length !== 0) {
+            set.add(trimed)
+          }
+        })
+      return set
     },
-    
-  },
-  mounted () {
-    console.log(this.todoList)
+    validate () {
+      (this.todoItem.title.length > 0)
+        ? this.addTodo()
+        : this.$store.commit('setAlert', {
+          message: 'Please enter the title todo',
+          type: 'warning',
+          flag: true
+        })
+    },
+    addTodo () {
+      this.todoItem.tags = this.parseTags(this.tagStr)
+
+      this.$store.commit('addTodo', this.todoItem)
+      this.$router.push({ name: 'home' })
+    }
   }
 }
 </script>
