@@ -1,4 +1,5 @@
 module.exports = {
-  pluginOptions: {
-  }
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/todovue/'
+    : '/'
 }

@@ -21,6 +21,7 @@ export default {
     clearAlert () {
       this.$store.commit('setAlert', {
         message: '',
+        type: 'info',
         flag: false
       })
     }

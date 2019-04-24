@@ -1,5 +1,10 @@
 # todo-vue
 
+## Todo site prototype
+Written as a knowledge test  
+Used Vue, Vuex, Vuetify  
+Testing by Jest
+
 ## Project setup
 ```
 npm install
@@ -25,10 +30,7 @@ npm run test
 npm run lint
 ```
 
-### Run your unit tests
+### Run your unit tests watched mode
 ```
-npm run test:unit
+npm run test:watch
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

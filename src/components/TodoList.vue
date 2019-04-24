@@ -42,7 +42,7 @@
 
         v-divider.mb-1
 
-        div(v-for="todo in todoColl" :key="todo.id")
+        div.block_todo(v-for="todo in todoColl" :key="todo.id")
           v-hover
             v-card(
               slot-scope="{ hover }"

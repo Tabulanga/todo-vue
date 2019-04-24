@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 const routerOptions = [
   { path: '/', name: 'home', component: 'Home' },
-  { path: '*', component: 'NotFound' },
   { path: '/about', name: 'about', component: 'About' },
   { path: '/add', name: 'addTodo', component: 'AddTodo' },
   { path: '/todo/:id', name: 'todo', component: 'Todo' }
@@ -20,5 +19,7 @@ const routes = routerOptions.map(route => {
 Vue.use(Router)
 
 export default new Router({
-  routes: [ ...routes ]
+  routes: [ ...routes,
+    { path: '*', component: 'NotFound' }
+  ]
 })

@@ -6,6 +6,6 @@ export const saveState = (state) => {
   localStorage.setItem(state.model.id, JSON.stringify(data))
 }
 
-export const loadState = (model) => {
-  return JSON.parse(localStorage.getItem(model.id))
+export const loadState = (state) => {
+  return JSON.parse(localStorage.getItem(state.model.id))
 }
